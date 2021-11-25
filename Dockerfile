@@ -1,6 +1,15 @@
 #### Stage 1: Build the application
-FROM openjdk as build
-#FROM openjdk:11 as build
+FROM maven:alpine
+
+LABEL caramelo <caramelo@caramelo.com>
+MAINTAINER caramelo <caramelo@caramelo.com>
+
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+
+#### Stage 2: Build the application
+FROM openjdk as Build
+
 # Set the current working directory inside the image
 WORKDIR /app
 #RUN mvn clean install
@@ -33,5 +42,5 @@ COPY --from=build ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
-EXPOSE 8080
-ENTRYPOINT ["java","-cp","app:app/lib/*","docker.spring.boot.DockerSpringBootApplication"]
+EXPOSE 80
+ENTRYPOINT ["java","-cp", "app:app/lib/*", "docker.spring.boot.DockerSpringBootApplication"]

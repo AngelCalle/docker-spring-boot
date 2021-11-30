@@ -1,19 +1,26 @@
-<!-- Listar imagene disponibles. -->
+<!-- List available images. -->
 docker image ls
 
-<!-- Listar contenedores activos. -->
+<!-- List active containers. -->
 docker ps -a
 
-<!-- Detener contenedor. -->
-docker rm ID_DOCKER
+<!-- Stop container. -->
+docker rm CONTAINER_ID
 
-<!-- Compilar contenedor. -->
+<!-- Get container information. -->
+docker inspect CONTAINER_ID
+
+<!-- Get container ip. -->
+docker inspect -f '{{.NetworkSettings.IPAddress}}' CONTAINER_ID
+
+
+<!-- Compile container. -->
 docker build . -t server-docker-spring-boot
 
-<!-- Levantar contenedor. -->
+<!-- Lift container. -->
 docker run -it --rm -d -p 8080:8080 --name caramelo server-docker-spring-boot
 
 <!-- docker run -it --rm -p 8080:8080 server-docker-spring-boot -->
 
-<!-- Acceder al servidor, cualquier otra url muestra una pagina de error -->
+<!-- Access the server, any other url shows an error page -->
 http://localhost:8080/demo
